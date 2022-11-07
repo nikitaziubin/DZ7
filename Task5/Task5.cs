@@ -37,7 +37,6 @@ namespace PrototypeFigure
     }
     class Rectangle : IFigure
     {
-        
         int width;
         int height;
         public Rectangle(int w, int h)
