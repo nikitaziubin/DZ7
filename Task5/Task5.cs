@@ -11,21 +11,25 @@ namespace PrototypeFigure
         {
             Console.OutputEncoding = Encoding.UTF8;
             IFigure figure = new Rectangle(10, 20);
-            IFigure clonedFigure = figure.Clone();
-            figure.GetInfo();
-            clonedFigure.GetInfo();
-            figure = new Circle(15);
-            clonedFigure = figure.Clone();
-            figure.GetInfo();
-            clonedFigure.GetInfo();
+            buildFigure(figure);
 
-            figure = new Triangle(4, 25);
-            clonedFigure = figure.Clone();
-            figure.GetInfo();
-            clonedFigure.GetInfo();
+            figure = new Circle(15);
+            buildFigure(figure);
+
+            figure = new Triangle(4, 25 ,10);
+            buildFigure(figure);
+
             Console.Read();
         }
+        static void buildFigure(IFigure figure)
+        {
+            IFigure clonedFigure = figure.Clone();
+            figure.Clone();
+            figure.GetInfo();
+            clonedFigure.GetInfo();
+        }
     }
+    
     interface IFigure
     {
         IFigure Clone();
@@ -33,6 +37,7 @@ namespace PrototypeFigure
     }
     class Rectangle : IFigure
     {
+        
         int width;
         int height;
         public Rectangle(int w, int h)
@@ -68,20 +73,22 @@ namespace PrototypeFigure
 
     class Triangle : IFigure
     {
-        int width;
-        int height;
-        public Triangle(int w, int h)
+        int len1;
+        int len2;
+        int len3;
+        public Triangle(int len1, int len2, int len3)
         {
-            width = w;
-            height = h;
+            this.len1 = len1;
+            this.len2 = len2;
+            this.len3 = len3;
         }
         public IFigure Clone()
         {
-            return new Triangle(this.width, this.height);
+            return new Triangle(this.len1, this.len2, this.len3);
         }
         public void GetInfo()
         {
-            Console.WriteLine("Трикутник довжиною {0} и шириною {1}", height, width);
+            Console.WriteLine("Трикутник зі сторонами {0} {1} {2}", len1, len2, len3);
         }
     }
 }

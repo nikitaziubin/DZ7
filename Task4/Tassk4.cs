@@ -8,15 +8,15 @@ namespace Decorator.Examples
             Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             // Create ConcreteComponent and two Decorators
-            ConcreteComponent yolka = new ConcreteComponent();
+            ConcreteComponent c = new ConcreteComponent();
             ConcreteDecoratorA d1 = new ConcreteDecoratorA();
             ConcreteDecoratorB d2 = new ConcreteDecoratorB();
-            
-            // Link decorators
-            d1.SetComponent(yolka);
-            d2.SetComponent(d1);
 
+            // Link decorators
+            d1.SetComponent(c);
+            d2.SetComponent(d1);
             d2.Operation();
+
 
             // Wait for user
             Console.Read();
@@ -33,13 +33,14 @@ namespace Decorator.Examples
     {
         public override void Operation()
         {
-            Console.WriteLine("Ялинка");
+            Console.WriteLine("Ялинка ");
         }
     }
     // "Decorator"
     abstract class Decorator : Component
     {
         protected Component component;
+
         public void SetComponent(Component component)
         {
             this.component = component;
@@ -61,8 +62,8 @@ namespace Decorator.Examples
         public override void Operation()
         {
             base.Operation();
-            addedState = "з прикрасами ";
-            Console.WriteLine(addedState );
+            addedState = "з прикрасами";
+            Console.WriteLine(addedState);
         }
     }
 
@@ -73,7 +74,7 @@ namespace Decorator.Examples
         {
             base.Operation();
             AddedBehavior();
-            Console.WriteLine("гірляндами");
+            Console.WriteLine("");
         }
         void AddedBehavior()
         {
