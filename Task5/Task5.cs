@@ -24,7 +24,7 @@ namespace PrototypeFigure
         static void buildFigure(IFigure figure)
         {
             IFigure clonedFigure = figure.Clone();
-            figure.Clone();
+            
             figure.GetInfo();
             clonedFigure.GetInfo();
         }
