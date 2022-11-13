@@ -1,36 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace telestialAntenaConector
+﻿namespace telestialAntenaConector
 {
-    //абстрактний клас творця, який має абстрактний метод FactoryMethod, що приймає тип продукта
-    public abstract class Creator
+    abstract class Creator
     {
-        public abstract Product FactoryMethod(int type);
+        public abstract TVPort FactoryMethod(int type, TelestialPort TVtype);
     }
 
-    public class ConcreteCreator : Creator
+    class ConcreteCreator : Creator
     {
-        public override Product FactoryMethod(int type)
+        public override TVPort FactoryMethod(int type, TelestialPort TVtype)
         {
             switch (type)
             {
-                //повертає об'єкт A, якщо type==1
-                case 1: return new ConcreteProductA();
-                //повертає об'єкт B, якщо type==2  
-                case 2: return new ConcreteProductB();
+                case 1: return new TV(TVtype);
+                case 2: return new USBTV(TVtype);
                 default: throw new ArgumentException("Invalid type.", "type");
             }
         }
     }
-
-    public abstract class Product { } //абстрактний клас продукт
-
-    //конкретні продукти з різною реалізацією
-    public class ConcreteProductA : Product { }
-
-    public class ConcreteProductB : Product { }
+    abstract class TVPort { }
+    class TV : TVPort
+    {
+        protected TelestialPort TVport { get; }
+        public TV(TelestialPort TVport)
+        {
+            TVport = new TelestialPort();
+            this.TVport = TVport;
+        }
+    }
+    class USBTV : TVPort
+    {
+        protected TelestialPort USBTVport { get; }
+        public USBTV(TelestialPort USBTVport)
+        {
+            USBTVport = new TelestialPort();
+            this.USBTVport = USBTVport;
+        }
+    }
 }

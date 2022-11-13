@@ -24,37 +24,39 @@ namespace telestialAntenaConector
 
     class SetelitePort 
     {
-        private SetelitePort setelitePort { get; set; }
+        private SetelitePort setelitePort;
         public string Connect()
         {
             return "Chanel is on";
         }
-
     }    
-    class TvAdapter
+    class TvAdapter : TVPort
     {
         private TelestialPort adapteeAntenaPort;
+        private TVPort Televisor;
         
-        public TvAdapter(TelestialPort TVport)
+        public TvAdapter(TVPort TVport, TelestialPort adapteeAntenaPort)
         {
-            adapteeAntenaPort = TVport;
+            Televisor = TVport;
+            this.adapteeAntenaPort = adapteeAntenaPort;
         }
-
         public SetelitePort seteliteAntenaConector()
         {
             return adapteeAntenaPort.ReturnAntenaPort();
+            //return adapteeAntenaPort.ReturnAntenaPort();
         }
-    }
+    }   
 
-    class USBTvAdapter
+    class USBTvAdapter : TVPort
     {
         private TelestialPort adapteeAntenaPort;
+        private TVPort USBTelevisor;
 
-        public USBTvAdapter(TelestialPort TVport)
+        public USBTvAdapter(TVPort USBTVport, TelestialPort adapteeAntenaPort)
         {
-            adapteeAntenaPort = TVport;
+            USBTelevisor = USBTVport;
+            this.adapteeAntenaPort = adapteeAntenaPort;
         }
-
         public SetelitePort seteliteAntenaConector()
         {
             return adapteeAntenaPort.ReturnAntenaPort();
@@ -66,20 +68,17 @@ namespace telestialAntenaConector
         static void Main()
         {
             Creator creator = new ConcreteCreator();
-            for (int i = 1; i <= 2; i++)
-            {
-                //створюємо спочатку продукт з типом 1, потім з типом 2
-                var product = creator.FactoryMethod(i);
-                Console.WriteLine("Where id = {0}, Created {1} ", i, product.GetType());
-            }
 
-
-            TelestialPort TV = new TelestialPort();
-            TvAdapter adapter = new TvAdapter(TV);
+            TelestialPort port = new TelestialPort();
+            var tvtype = creator.FactoryMethod(2, port);
+            TvAdapter adapter = new TvAdapter(tvtype, port);
             Console.WriteLine(adapter.seteliteAntenaConector().Connect());
 
+
+
+            tvtype = creator.FactoryMethod(2, port);
             TelestialPort USBTV = new TelestialPort();
-            USBTvAdapter USBadapter = new USBTvAdapter(USBTV);
+            USBTvAdapter USBadapter = new USBTvAdapter(tvtype, port);
             Console.WriteLine(USBadapter.seteliteAntenaConector().Connect());
         }
     }
